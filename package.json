@@ -1,0 +1,32 @@
+{
+  "name": "project-v2",
+  "version": "1.0.0",
+  "description": "global task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stanislav-osipov/project-v2.git"
+  },
+  "author": "Osipov Stanislav",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stanislav-osipov/project-v2/issues"
+  },
+  "homepage": "https://github.com/stanislav-osipov/project-v2#readme",
+  "devDependencies": {
+    "babel-preset-react": "^6.1.18",
+    "del": "^2.1.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-babel": "^6.1.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-sass": "^2.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-webserver": "^0.9.1",
+    "imagemin-pngquant": "^4.2.0"
+  }
+}

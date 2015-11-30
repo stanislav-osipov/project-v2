@@ -1,0 +1,18 @@
+.footer {
+	height: 100%;
+	display: flex;
+	background-color: #48B;
+	border-style: solid;
+	border-color: #269;
+	border-width: 4px 0 0 0;
+	
+	&__info-group {
+		margin: auto;
+	}
+	
+	&__mail, &__cell {
+		display: inline-block;
+		font-size: 16px;
+		color: #FFF;
+	}
+}
