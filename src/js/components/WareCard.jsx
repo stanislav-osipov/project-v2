@@ -1,4 +1,4 @@
-var CategoryPage = React.createClass({
+var WareCard = React.createClass({
 	getDefaultProps: function () {
 		function CategoryItem(name, image, ref, count) {
 			CatalogItem.call(this, name, image, ref)
@@ -6,15 +6,16 @@ var CategoryPage = React.createClass({
 		}
 		CategoryItem.prototype = Object.create(CatalogItem.prototype)
 		var categories = []
-			categories.push(new CategoryItem("Volleyball gear", "volleyball.jpg", "volleyball", "32"))
-			categories.push(new CategoryItem("Basketball gear", "basketball.jpg", "basketball", "41"))
-			categories.push(new CategoryItem("Football gear", "football.jpg", "football", "54"))
-			categories.push(new CategoryItem("Gym gear", "gym.jpg", "gym", "17"))
-			categories.push(new CategoryItem("Cycling gear", "cycling.jpg", "cycling", "23"))
-			categories.push(new CategoryItem("Athletic gear", "athlet.jpg", "athletic", "11"))
+		categories.push(new CategoryItem("Volleyball gear", "volleyball.jpg", "volleyball", "32"))
+		categories.push(new CategoryItem("Basketball gear", "basketball.jpg", "basketball", "41"))
+		categories.push(new CategoryItem("Football gear", "football.jpg", "football", "54"))
+		categories.push(new CategoryItem("Gym gear", "gym.jpg", "gym", "17"))
+		categories.push(new CategoryItem("Cycling gear", "cycling.jpg", "cycling", "23"))
+		categories.push(new CategoryItem("Athletic gear", "athlet.jpg", "athletic", "11"))
 		
 		return {
-		  categories
+		  categories: categories,
+			category: "ggg"
 		}
 	},
 
@@ -26,6 +27,9 @@ var CategoryPage = React.createClass({
 				</div>
 				
 				<div className="body-wrapper">
+				
+					<Path category={this.props.category} itemName={this.props.params.name}/>
+				
 					<div id="content-wrapper" className="content-wrapper">
 						<div className="page__content">
 							<CategoryList categories={this.props.categories}/>

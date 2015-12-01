@@ -10,7 +10,7 @@
 	&__logo-img {
 		width: 70px;
 		height: 70px;
-		margin: 2px 10px;
+		margin: auto 10px;
 	}
 	
 	&__logo-text {
@@ -31,6 +31,11 @@
 	&__navigation {
 		margin: auto 5px;
 	}
+}
+
+.logo-img {
+	width: 70px;
+	height: 70px;
 }
 
 .navigation {

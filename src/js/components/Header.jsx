@@ -2,7 +2,9 @@ var Header = React.createClass({
   render: function () {		
     return (
       <div className="header">
-				<img className="header__logo-img" src="images/navigation/logo.png" alt="Logo"/>
+				<Link to="/" className="header__logo-img">
+					<img className="logo-img" src="images/navigation/logo.png" alt="Logo"/>
+				</Link>
 
 				<div className="header__logo-text">
 					<i> Sports gear e-shop </i>
