@@ -106,6 +106,7 @@ hr {
 }
 
 .add-button {
+	cursor: pointer;
 	margin-top: 10px;
 	margin-bottom: 20px;
 	/*width: 150px;*/
@@ -171,7 +172,7 @@ hr {
 	border: none;
 	background-color: #FFF;
 	border-style: solid;
-	border-width: 1px;
+	border-width: 1px 1px 1px 0;
 	border-color: #AAA;
 	text-align: center;
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);

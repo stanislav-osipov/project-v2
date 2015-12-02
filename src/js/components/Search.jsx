@@ -17,6 +17,11 @@ var Search = React.createClass({
 			});
 		} else {categories = []}
 		
+		var maxLength = 6;
+		if (categories.length > maxLength) {
+			categories.splice(maxLength - 1, categories.length - maxLength)
+		}
+		
     return (
 			<div>
       <div className="search">
@@ -26,7 +31,7 @@ var Search = React.createClass({
 						
 			<div className="search-pop-up">
 			{ categories.map(function(l, key){
-					return <div className="search-pop-up__item" key={key + 100}> <a className="item__link" href={l.url}>{l.name}</a> </div>
+					return <div className="search-pop-up__item" key={key + 100}> <Link to={l.url} className="item__link">{l.name}</Link> </div>
 			}) }
 			</div>
 

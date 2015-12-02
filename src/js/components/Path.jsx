@@ -4,7 +4,7 @@ var Path = React.createClass({
 		
     return (
       <div className="path">
-				<Link to="/" className="path__link"> {this.props.category} </Link> | {this.props.itemName}
+				<Link to={"/wares/" + this.props.categoryName} className="path__link"> {this.props.categoryName} </Link> | {this.props.itemName}
 			</div>
     );
   }

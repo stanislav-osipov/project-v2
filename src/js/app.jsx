@@ -5,12 +5,21 @@ function CatalogItem(name, image, ref) {
 }
 
 var categories = [ //for search pop-up
-	{ name: 'Volleyball gear', url: 'item_list.html'},
-	{ name: 'Basketball gear', url: 'item_list.html'},
-	{ name: 'Football gear', url: 'item_list.html'},
-	{ name: 'Gym gear', url: 'item_list.html'},
-	{ name: 'Cycling gear', url: 'item_list.html'},
-	{ name: 'Athletic gear', url: 'item_list.html'}
+	{ name: 'Volleyball gear', url: '/wares/volleyball'},
+	{ name: 'Basketball gear', url: '/wares/basketball'},
+	{ name: 'Football gear', url: '/wares/football'},
+	{ name: 'Gym gear', url: '/wares/gym'},
+	{ name: 'Cycling gear', url: '/wares/cycling'},
+	{ name: 'Athletic gear', url: '/wares/athletic'},
+	{ name: 'Nice ball', url: '/wares/volleyball/Nice Ball'},
+	{ name: 'Nice beach ball', url: '/wares/volleyball/Beach Ball'},
+	{ name: 'Nice shoes', url: '/wares/basketball/Nice Shoes'},
+	{ name: 'Nice knee pads', url: '/wares/basketball/Nice Knee Pads'},
+	{ name: 'Nice beach net', url: '/wares/basketball/Nice Beach Net'}
+];
+
+var cart = [
+
 ];
 
 var Router = window.ReactRouter.Router;
@@ -35,7 +44,7 @@ window.addEventListener("DOMContentLoaded", function() {
 				<Route path="/" component={App}>
 					<IndexRoute component={CategoryPage}/>
 					<Route path="wares/:name" component={WaresPage}/>
-					<Route path="item/:name" component={WareCard}/>
+					<Route path="wares/:categoryName/:itemName" component={WareCardPage}/>
 				</Route>
 			</Router>
 		), document.getElementById('page'));
