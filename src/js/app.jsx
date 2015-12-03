@@ -2,7 +2,7 @@ function CatalogItem(name, image, ref) {
 	this.name = name
 	this.image = image
 	this.ref = ref
-}
+};
 
 var categories = [ //for search pop-up
 	{ name: 'Volleyball gear', url: '/wares/volleyball'},
@@ -18,9 +18,16 @@ var categories = [ //for search pop-up
 	{ name: 'Nice beach net', url: '/wares/basketball/Nice Beach Net'}
 ];
 
-var cart = [
+var cart = {
+	summary: {
+		count: 0,
+		price: 0
+	},
+	list: [],
+	count: []
+};
 
-];
+//for (var i = 0; i < cart.list.length; i++) {cart.count.push("1")}
 
 var Router = window.ReactRouter.Router;
 var Link = window.ReactRouter.Link;
@@ -33,7 +40,7 @@ var App = React.createClass({
 	render() {
 		return (<div className="Application"> {this.props.children} </div>);
 	}
-})
+});
 
 window.addEventListener("DOMContentLoaded", function() {
   /*ReactDOM.render(
@@ -45,6 +52,7 @@ window.addEventListener("DOMContentLoaded", function() {
 					<IndexRoute component={CategoryPage}/>
 					<Route path="wares/:name" component={WaresPage}/>
 					<Route path="wares/:categoryName/:itemName" component={WareCardPage}/>
+					<Route path="cart" component={CartPage}/>
 				</Route>
 			</Router>
 		), document.getElementById('page'));

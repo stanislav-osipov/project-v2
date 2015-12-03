@@ -2,7 +2,9 @@ var Navigation = React.createClass({
   render: function () {
     return (
       <div className="navigation">
-				<a href="cart.html"> <img className="navigation__image" src="images/navigation/cart.png" alt="cart"/> </a>
+				<Link to="/cart">
+					<img className="navigation__image" src="images/navigation/cart.png" alt="cart"/>
+				</Link>
 				<a href="#loginWindow"> <img className="navigation__image" src="images/navigation/account.png" alt="acc"/> </a>
       </div>
     );

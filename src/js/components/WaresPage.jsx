@@ -58,7 +58,7 @@ var WaresPage = React.createClass({
 					
 						<div className="page__content">
 							<div className="content__view-option">
-								<div className="view-option"> <a className="item__link" href="item_list_grid.html"> Grid View </a> </div>
+								<div className="view-option"> <Link to={"/"} className="item__link"> Grid View </Link> </div>
 							</div>
 							<WaresList wares={this.props.wares[this.props.params.name]} category={this.props.params.name}/>
 						</div>

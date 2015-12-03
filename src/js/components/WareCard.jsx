@@ -10,6 +10,19 @@ var WareCard = React.createClass({
 	componentWillReceiveProps: function(){
 		this.state = this.getInitialState();
 	},
+	
+	handleClickToCart: function() {
+		var self = this;
+		
+		if (!_.find(cart.list, function(item){return item.name == self.props.item.name;})) {
+			this.props.item.ref = this.props.categoryName + "/" + this.props.item.ref;
+			cart.list.push(this.props.item);
+			cart.summary.price = cart.summary.price + this.props.item.price;
+			cart.summary.count++;
+		}
+		
+		cart.count.push(this.state.count)
+	},
 		
   render: function () {
     var self = this;
@@ -43,7 +56,7 @@ var WareCard = React.createClass({
 					<hr/>
 					
 					<div className="price">
-						Price: {this.props.item.price}
+						Price: ${this.props.item.price}
 					</div>
 					
 					<div className="item__byu-options">
@@ -52,8 +65,8 @@ var WareCard = React.createClass({
 							<input className="select-quantity" type="number" min="1" max="10" value={this.state.count} onChange={this.handleCountChange}/>
 						</div>
 						
-						<Link to="/">
-							<input className="add-button" type="button" value="Add to cart"/>
+						<Link to={"/cart"}>
+							<input className="add-button" type="button" value="Add to cart" onClick={this.handleClickToCart}/>
 						</Link>
 					</div>
 					

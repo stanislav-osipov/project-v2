@@ -26,6 +26,7 @@ var path = {
     libs: [
       'bower_components/react/react.js',
       'bower_components/react/react-dom.js',
+			'bower_components/underscore/underscore.js',
     ],
     scss: {
 			all: dirs.src + '/style/**/*.scss',
