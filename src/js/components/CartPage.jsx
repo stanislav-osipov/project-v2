@@ -35,7 +35,9 @@ var CartPage = React.createClass({
 							<div className="price--in-summary"> ${cart.summary.price} </div>
 							<hr className="menu__line menu__line--in-cart" />
 							<div className="continue continue--in-summary">
-								<input className="add-button add-button--in-summary" type="button" value="Proceed to chekout" />
+								<Link to="/address"> 
+									<input className="add-button add-button--in-summary" type="button" value="Proceed to chekout" />
+								</Link>
 							</div>
 						</div>
 					

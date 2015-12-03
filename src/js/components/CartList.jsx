@@ -17,10 +17,11 @@ var CartList = React.createClass({
 			return { count: n.count}
 		});
 		dif = -(dif - e.target.value);
-		console.log(dif);
+		//console.log(dif);
 		//to-do: "-"
 		cart.summary.price = cart.summary.price + dif * this.props.waresList[e.target.alt].price;
 		//this.forceUpdate();
+		window.location.href = "#/cart";
 	},	 
 	
 	componentWillUnmount: function() {
@@ -31,9 +32,15 @@ var CartList = React.createClass({
 		cart.summary.price = 0;
 		for (var i = 0; i < this.props.waresList.length; i++) {cart.summary.price = cart.summary.price + this.state.count[i] * this.props.waresList[i].price;}	
 	},
+	
+	handleRemoveClick: function(e) {
+		cart.summary.price = cart.summary.price - this.state.count[e.target.alt] * this.props.waresList[e.target.alt].price;
+		cart.list.splice(e.target.alt, 1);
+		window.location.href = "#/cart";
+	},
 		
-  render: function () {
-    var self = this;
+	render: function () {
+		var self = this;
 	  
 		var waresListVDOM = [];
 		for (var i = 0; i < this.props.waresList.length; i++) {	
@@ -59,7 +66,7 @@ var CartList = React.createClass({
 						
 						<div className="item__byu-options">		
 							<div>
-								<input className="add-button add-button--remove" type="button" value="X"/>
+								<input className="add-button add-button--remove" type="button" alt={i} value="X" onClick={this.handleRemoveClick}/>
 							</div>
 						</div>
 						
@@ -69,8 +76,8 @@ var CartList = React.createClass({
 		};
 			
     return (
-      <div className="content">
-        {waresListVDOM}
+	<div className="content">
+			{waresListVDOM}
 				
 				<div className="item content__item content__item--extend content__item--in-cart content__item--cart-total"> 
 					<div className="item__price">
@@ -82,13 +89,13 @@ var CartList = React.createClass({
 						<Link to="/">
 							<input className="add-button add-button--continue" type="button" value="Continue shopping" />
 						</Link>
-						<Link to="/">
+						<Link to="/address">
 							<input className="add-button add-button--continue" type="button" value="Proceed to chekout" />
 						</Link>
 					</div>
 				</div>
 				
-      </div>
+    </div>
     );
   }
 })

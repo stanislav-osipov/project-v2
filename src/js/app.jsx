@@ -53,6 +53,8 @@ window.addEventListener("DOMContentLoaded", function() {
 					<Route path="wares/:name" component={WaresPage}/>
 					<Route path="wares/:categoryName/:itemName" component={WareCardPage}/>
 					<Route path="cart" component={CartPage}/>
+					<Route path="cards" component={CardsPage}/>
+					<Route path="address" component={AddressPage}/>
 				</Route>
 			</Router>
 		), document.getElementById('page'));
