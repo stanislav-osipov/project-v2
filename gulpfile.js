@@ -10,8 +10,8 @@ var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 
 var dirs = {
-  src: './src',
-  dest: './dest',
+	src: './src',
+	dest: './dest',
 }
 
 var path = {
@@ -27,6 +27,7 @@ var path = {
       'bower_components/react/react.js',
       'bower_components/react/react-dom.js',
 			'bower_components/underscore/underscore.js',
+			'node_modules/react-router/umd/ReactRouter.js',
     ],
     scss: {
 			all: dirs.src + '/style/**/*.scss',

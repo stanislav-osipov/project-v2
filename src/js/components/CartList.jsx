@@ -17,11 +17,10 @@ var CartList = React.createClass({
 			return { count: n.count}
 		});
 		dif = -(dif - e.target.value);
-		//console.log(dif);
-		//to-do: "-"
 		cart.summary.price = cart.summary.price + dif * this.props.waresList[e.target.alt].price;
-		//this.forceUpdate();
-		window.location.href = "#/cart";
+		//this.setState();
+		this.forceUpdate();
+		//window.location.href = "#/cart";
 	},	 
 	
 	componentWillUnmount: function() {
@@ -36,7 +35,11 @@ var CartList = React.createClass({
 	handleRemoveClick: function(e) {
 		cart.summary.price = cart.summary.price - this.state.count[e.target.alt] * this.props.waresList[e.target.alt].price;
 		cart.list.splice(e.target.alt, 1);
-		window.location.href = "#/cart";
+		cart.count.splice(e.target.alt, 1);
+		cart.summary.count--;
+		this.forceUpdate();
+		//this.setState();
+		//window.location.href = "#/cart";
 	},
 		
 	render: function () {

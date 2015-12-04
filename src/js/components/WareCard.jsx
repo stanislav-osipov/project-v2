@@ -3,8 +3,8 @@ var WareCard = React.createClass({
 		return { count: "1" };
 	},
 	
-	handleCountChange: function(c){
-		this.setState({count: c.target.value});
+	handleCountChange: function(e){
+		this.setState({count: e.target.value});
 	},	 
 	
 	componentWillReceiveProps: function(){
@@ -15,10 +15,12 @@ var WareCard = React.createClass({
 		var self = this;
 		
 		if (!_.find(cart.list, function(item){return item.name == self.props.item.name;})) {
-			this.props.item.ref = this.props.categoryName + "/" + this.props.item.ref;
-			cart.list.push(this.props.item);
-			cart.summary.price = cart.summary.price + this.props.item.price;
-			cart.summary.count++;
+				if (~this.props.item.ref.indexOf("/") == 0) {
+					this.props.item.ref = this.props.categoryName + "/" + this.props.item.ref;	
+				}
+				cart.list.push(this.props.item);
+				cart.summary.price = cart.summary.price + this.state.count * this.props.item.price;
+				cart.summary.count++;
 		}
 		
 		cart.count.push(this.state.count)

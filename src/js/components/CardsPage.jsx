@@ -8,7 +8,7 @@ var CardsPage = React.createClass({
 				
 				<div className="body-wrapper">
 					<div id="content-wrapper" className="content-wrapper">
-						<div className="content page__content page__content--in-address">
+						<div className="content content--in-card page__content page__content--in-address">
 
 							<div className="card-face">  
 								<div> 
@@ -34,7 +34,7 @@ var CardsPage = React.createClass({
 						
 							<div className="continue">
 								<Link to="/">
-									<input className="add-button add-button--to-pay" type="button" value="Done!"/>
+									<input className="add-button add-button--to-pay" type="button" value="Pay"/>
 								</Link>
 							</div>
 							

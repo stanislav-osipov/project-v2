@@ -27,6 +27,8 @@
     "gulp-sass": "^2.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-webserver": "^0.9.1",
-    "imagemin-pngquant": "^4.2.0"
+    "history": "^1.13.1",
+    "imagemin-pngquant": "^4.2.0",
+    "react-router": "^1.0.0"
   }
 }

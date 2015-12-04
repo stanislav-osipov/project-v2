@@ -1,21 +1,4 @@
 var CartPage = React.createClass({
-	getInitialState: function(){
-		return { count: "1" };
-	},
-	
-	handleCountChange: function(c){
-		this.setState({count: c.target.value});
-	},	 
-	
-	componentWillReceiveProps: function(){
-		this.state = this.getInitialState();
-	},
-	
-	/*handleClickToCart: function() {
-		cart.push(this.props.item);
-		alert(cart);
-	},*/
-		
   render: function () {
     var self = this;
 		

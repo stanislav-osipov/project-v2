@@ -162,6 +162,9 @@ hr {
 		font-size: 17px;
 		width: 170px;
 		/*margin-left: 60px;*/
+		&:first-child {
+			margin-left: 15px;
+		}
 	}
 }
 
