@@ -1,3 +1,7 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
 var Footer = React.createClass({
   render: function () {
     return (
@@ -10,4 +14,5 @@ var Footer = React.createClass({
     );
   }
 })
-	
+
+module.exports = Footer;	

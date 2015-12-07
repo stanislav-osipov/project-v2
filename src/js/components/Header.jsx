@@ -1,3 +1,14 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
+var Search = require('./Search.jsx');
+var Navigation = require('./Navigation.jsx');
+
+var App = require('../app.jsx');
+
+var categories = App.categories;
+
 var Header = React.createClass({
   render: function () {		
     return (
@@ -21,4 +32,7 @@ var Header = React.createClass({
     );
   }
 })
+
+module.exports = Header;
+
 	

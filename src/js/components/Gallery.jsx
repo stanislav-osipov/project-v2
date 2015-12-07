@@ -1,3 +1,7 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
 var Gallery = React.createClass({
 	getInitialState: function(){
 		return { position: 0 };
@@ -55,4 +59,6 @@ var Gallery = React.createClass({
 			</div>
     );
   }
-})
+});
+
+module.exports = Gallery;

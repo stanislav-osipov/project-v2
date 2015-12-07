@@ -1,3 +1,7 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
 var Navigation = React.createClass({
   render: function () {
     return (
@@ -9,5 +13,7 @@ var Navigation = React.createClass({
       </div>
     );
   }
-})
+});
+
+module.exports = Navigation;
 	

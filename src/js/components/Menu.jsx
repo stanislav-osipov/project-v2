@@ -1,3 +1,7 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
 var Menu = React.createClass({
   render: function () {
     var self = this;
@@ -24,4 +28,6 @@ var Menu = React.createClass({
       </div>
     );
   }
-})
+});
+
+module.exports = Menu;

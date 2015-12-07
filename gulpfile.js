@@ -9,6 +9,11 @@ var del = require('del');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 
+var source = require('vinyl-source-stream');
+var browserify = require('browserify');
+var babelify = require('babelify');
+var watchify = require('watchify');
+
 var dirs = {
 	src: './src',
 	dest: './dest',
@@ -119,6 +124,25 @@ gulp.task('images', function () {
 		.pipe(gulp.dest(path.dest.img));
 });
 
+gulp.task('b-browserify', function () {
+	return browserify({entries: path.src.js.app, extensions: ['.jsx'], debug: true})
+		.transform(babelify.configure({
+			presets: ["react"]
+		}))
+		.bundle()
+		.on("error", function (err) { console.log("Error : " + err.message); })
+		.pipe(source('bundle.js'))
+		.pipe(gulp.dest(path.dest.js));
+});
+
+gulp.task('b-watch', function() {
+	gulp.watch(path.src.js.all, ['b-browserify']);
+});
+
 gulp.task('build', ['libs', 'html', 'js', 'styles', 'images', 'webserver'])
 
 gulp.task('serve', ['libs', 'html:watch', 'js:watch', 'styles:watch', 'webserver'])
+
+gulp.task('b-build', ['html', 'b-browserify', 'styles', 'images'])
+
+gulp.task('b-serve', ['b-watch', 'styles:watch', 'html:watch', 'webserver'])

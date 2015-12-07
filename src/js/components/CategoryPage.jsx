@@ -1,3 +1,12 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
+var CatalogItem = require('../app.jsx').CatalogItem;
+var Header = require('./Header.jsx');
+var Footer = require('./Footer.jsx');
+var CategoryList = require('./CategoryList.jsx');
+
 var CategoryPage = React.createClass({
 	getDefaultProps: function () {
 		function CategoryItem(name, image, ref, count) {
@@ -39,4 +48,6 @@ var CategoryPage = React.createClass({
 			</div>
 		);
 	}
-})
+});
+
+module.exports = CategoryPage;

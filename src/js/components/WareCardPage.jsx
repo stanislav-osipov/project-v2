@@ -1,3 +1,14 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
+var CatalogItem = require('../app.jsx').CatalogItem;
+
+var Header = require('./Header.jsx');
+var Footer = require('./Footer.jsx');
+var WareCard = require('./WareCard.jsx');
+var Path = require('./Path.jsx');
+
 var WareCardPage = React.createClass({
 	getDefaultProps: function () {
 		function ItemFull(name, image, ref, description, price, rating) {
@@ -45,4 +56,6 @@ var WareCardPage = React.createClass({
 			</div>
 		);
 	}
-})
+});
+
+module.exports = WareCardPage;

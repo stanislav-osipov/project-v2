@@ -1,3 +1,14 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
+var CatalogItem = require('../app.jsx').CatalogItem;
+
+var Header = require('./Header.jsx');
+var Footer = require('./Footer.jsx');
+var WaresList = require('./WaresList.jsx');
+var Menu = require('./Menu.jsx');
+
 var WaresPage = React.createClass({	
 	getDefaultProps: function () {
 		function WaresItem(name, image, ref, price) {
@@ -71,4 +82,6 @@ var WaresPage = React.createClass({
 			</div>
 		);
 	}
-})
+});
+
+module.exports = WaresPage;

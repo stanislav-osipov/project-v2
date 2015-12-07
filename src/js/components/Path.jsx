@@ -1,3 +1,7 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
 var Path = React.createClass({
   render: function () {
     var self = this;
@@ -8,4 +12,6 @@ var Path = React.createClass({
 			</div>
     );
   }
-})
+});
+
+module.exports = Path;

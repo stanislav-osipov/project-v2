@@ -1,45 +1,28 @@
+var _ = require('underscore');
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
+var cart = require('../app.jsx').cart;
+
 var CartList = React.createClass({
-	getInitialState: function(){
-		/*var cnt = [];
-		for (var i = 0; i < this.props.waresList.length; i++) {cnt.push(1)}*/
-		return { count: cart.count};
-	},
-	
-	handleChange: function(e){
-		var self = this;
-		var dif = 0;		
-		
-		dif = this.state.count[e.target.alt];
-		
-		this.setState(function(previousState, currentProps) {
-			var n = previousState;
-			n.count[e.target.alt] = e.target.value; 
-			return { count: n.count}
-		});
+	handleChange: function(e){			
+		var dif = this.props.waresList[e.target.alt].count;
+		this.props.waresList[e.target.alt].count = e.target.value;
 		dif = -(dif - e.target.value);
-		cart.summary.price = cart.summary.price + dif * this.props.waresList[e.target.alt].price;
-		//this.setState();
+		this.props.summary.price = this.props.summary.price + dif * this.props.waresList[e.target.alt].item.price;
+		
 		this.forceUpdate();
-		//window.location.href = "#/cart";
 	},	 
 	
-	componentWillUnmount: function() {
-		cart.count = this.state.count;	
-	},
-	
-	componentWillMount: function() {
-		cart.summary.price = 0;
-		for (var i = 0; i < this.props.waresList.length; i++) {cart.summary.price = cart.summary.price + this.state.count[i] * this.props.waresList[i].price;}	
-	},
-	
 	handleRemoveClick: function(e) {
-		cart.summary.price = cart.summary.price - this.state.count[e.target.alt] * this.props.waresList[e.target.alt].price;
-		cart.list.splice(e.target.alt, 1);
-		cart.count.splice(e.target.alt, 1);
-		cart.summary.count--;
+		this.props.summary.price = this.props.summary.price - this.props.waresList[e.target.alt].count * this.props.waresList[e.target.alt].item.price;
+		 
+		this.props.waresList.splice(_.findIndex(this.props.waresList, {id: this.props.waresList[e.target.alt].id}), 1);
+		this.props.summary.count--;
+
 		this.forceUpdate();
-		//this.setState();
-		//window.location.href = "#/cart";
 	},
 		
 	render: function () {
@@ -48,22 +31,22 @@ var CartList = React.createClass({
 		var waresListVDOM = [];
 		for (var i = 0; i < this.props.waresList.length; i++) {	
 			waresListVDOM.push(
-				<div className="item content__item content__item--extend content__item--in-cart" key={"cart " + i}>
-					<Link to={"/wares/" + this.props.waresList[i].ref} className="item__link">
-						<img className="item__image" src={"images/categories/" + this.props.waresList[i].image} alt="Item"/>
+				<div className="item content__item content__item--extend content__item--in-cart" key={this.props.waresList[i].id}>
+					<Link to={"/wares/" + this.props.waresList[i].item.ref} className="item__link">
+						<img className="item__image" src={"images/categories/" + this.props.waresList[i].item.image} alt="Item"/>
 					</Link> 
 					
 					<div className="item__description item__description--short">
-						<h1> <i> <Link to={"/wares/" + this.props.waresList[i].ref} className="item__link"> {this.props.waresList[i].name} </Link> </i> </h1>
+						<h1> <i> <Link to={"/wares/" + this.props.waresList[i].item.ref} className="item__link"> {this.props.waresList[i].item.name} </Link> </i> </h1>
 						
 						<div className="item__price">
-							${this.props.waresList[i].price}
+							${this.props.waresList[i].item.price}
 						</div>
 						
 						<hr/>
 							<div>
 								Quantity: 
-								<input className="select-quantity" type="number" min="1" max="10" alt={i} value={this.state.count[i]} onChange={this.handleChange}/>
+								<input className="select-quantity" type="number" min="1" max="10" alt={i} value={this.props.waresList[i].count} onChange={this.handleChange}/>
 							</div>				
 						<hr/>
 						
@@ -79,26 +62,47 @@ var CartList = React.createClass({
 		};
 			
     return (
-	<div className="content">
-			{waresListVDOM}
-				
-				<div className="item content__item content__item--extend content__item--in-cart content__item--cart-total"> 
-					<div className="item__price">
-						<i> Total: ${cart.summary.price} </i>
-						<hr/>
+				<div id="content-wrapper" className="content-wrapper">
+		
+					<div className="menu menu--in-cart page__menu page__menu--in-cart">
+						<div> Bascet summary </div>
+						<div className="item__description--short"> ({this.props.summary.count} items) </div>
+						<hr className="menu__line menu__line--in-cart" />
+						<div className="price--in-summary"> ${this.props.summary.price} </div>
+						<hr className="menu__line menu__line--in-cart" />
+						<div className="continue continue--in-summary">
+							<Link to="/address"> 
+								<input className="add-button add-button--in-summary" type="button" value="Proceed to chekout" />
+							</Link>
+						</div>
 					</div>
-						
-					<div className="continue">
-						<Link to="/">
-							<input className="add-button add-button--continue" type="button" value="Continue shopping" />
-						</Link>
-						<Link to="/address">
-							<input className="add-button add-button--continue" type="button" value="Proceed to chekout" />
-						</Link>
+				
+					<div className="page__content page__content--in-cart">	
+			
+						<div className="content">
+							{waresListVDOM}
+								
+							<div className="item content__item content__item--extend content__item--in-cart content__item--cart-total"> 
+								<div className="item__price">
+									<i> Total: ${this.props.summary.price} </i>
+									<hr/>
+								</div>
+									
+								<div className="continue">
+									<Link to="/">
+										<input className="add-button add-button--continue" type="button" value="Continue shopping" />
+									</Link>
+									<Link to="/address">
+										<input className="add-button add-button--continue" type="button" value="Proceed to chekout" />
+									</Link>
+								</div>
+							</div>
+								
+						</div>
 					</div>
 				</div>
-				
-    </div>
     );
   }
-})
+});
+
+module.exports = CartList;

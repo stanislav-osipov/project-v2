@@ -1,7 +1,22 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Router = require('react-router').Router;
+var Route = require('react-router').Route;
+var Link = require('react-router').Link;
+var IndexRoute = require('react-router').IndexRoute;
+
 function CatalogItem(name, image, ref) {
 	this.name = name
 	this.image = image
 	this.ref = ref
+};
+
+var cart = {
+	summary: {
+		count: 0,
+		price: 0
+	},
+	list: []
 };
 
 var categories = [ //for search pop-up
@@ -18,23 +33,16 @@ var categories = [ //for search pop-up
 	{ name: 'Nice beach net', url: '/wares/basketball/Nice Beach Net'}
 ];
 
-var cart = {
-	summary: {
-		count: 0,
-		price: 0
-	},
-	list: [],
-	count: []
-};
+module.exports.CatalogItem = CatalogItem;
+module.exports.categories = categories;
+module.exports.cart = cart;
 
-//for (var i = 0; i < cart.list.length; i++) {cart.count.push("1")}
-
-var Router = window.ReactRouter.Router;
-var Link = window.ReactRouter.Link;
-var Route = window.ReactRouter.Route;
-var IndexRoute = window.ReactRouter.IndexRoute;
-
-var Redirect = window.ReactRouter.Redirect;
+var CategoryPage = require('./components/CategoryPage.jsx');
+var WaresPage = require('./components/WaresPage.jsx');
+var WareCardPage = require('./components/WareCardPage.jsx');
+var CartPage = require('./components/CartPage.jsx');
+var CardsPage = require('./components/CardsPage.jsx');
+var AddressPage = require('./components/AddressPage.jsx');
 
 var App = React.createClass({
 	render() {
@@ -43,9 +51,6 @@ var App = React.createClass({
 });
 
 window.addEventListener("DOMContentLoaded", function() {
-  /*ReactDOM.render(
-      React.createElement(WaresPage), //CategoryPage
-      document.getElementById('page'));*/
 		ReactDOM.render((
 			<Router>
 				<Route path="/" component={App}>

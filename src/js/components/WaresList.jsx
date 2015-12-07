@@ -1,3 +1,7 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
 var WaresList = React.createClass({
   render: function () {
     var self = this;
@@ -22,4 +26,6 @@ var WaresList = React.createClass({
       </div>
     );
   }
-})
+});
+
+module.exports = WaresList;

@@ -1,3 +1,10 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
+var Header = require('./Header.jsx');
+var Footer = require('./Footer.jsx');
+
 var AddressPage = React.createClass({
 	render: function () {
 		return (
@@ -43,4 +50,6 @@ var AddressPage = React.createClass({
 			</div>
 		);
 	}
-})
+});
+
+module.exports = AddressPage;

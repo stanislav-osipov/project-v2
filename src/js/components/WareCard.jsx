@@ -1,3 +1,13 @@
+var _ = require('underscore');
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Link = require('react-router').Link;
+
+var Gallery = require('./Gallery.jsx');
+
+var cart = require('../app.jsx').cart;
+
 var WareCard = React.createClass({
 	getInitialState: function(){
 		return { count: "1" };
@@ -14,16 +24,17 @@ var WareCard = React.createClass({
 	handleClickToCart: function() {
 		var self = this;
 		
-		if (!_.find(cart.list, function(item){return item.name == self.props.item.name;})) {
+		if (!_.find(cart.list, function(ware){return ware.item.name == self.props.item.name;})) {
 				if (~this.props.item.ref.indexOf("/") == 0) {
 					this.props.item.ref = this.props.categoryName + "/" + this.props.item.ref;	
 				}
-				cart.list.push(this.props.item);
+				var newId = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
+				cart.list.push( {id: newId, item: this.props.item, count: this.state.count});
 				cart.summary.price = cart.summary.price + this.state.count * this.props.item.price;
 				cart.summary.count++;
 		}
 		
-		cart.count.push(this.state.count)
+		//cart.count.push(this.state.count)
 	},
 		
   render: function () {
@@ -83,4 +94,6 @@ var WareCard = React.createClass({
       </div>
     );
   }
-})
+});
+
+module.exports = WareCard;
