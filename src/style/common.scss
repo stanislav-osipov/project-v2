@@ -34,6 +34,7 @@ body, .Application, #page{
 	position: absolute;
 	text-align: center;
 	transition: 0.2s;
+	z-index: 9999;
 
 	&__item {
 		margin: 0 auto;

@@ -17,7 +17,7 @@ function create(item, count) {
 }
 
 function update(id, updates) {
-  _cartItems[id] = assign({}, _todos[id], updates);
+  _cartItems[id] = assign({}, _cartItems[id], updates);
 }
 
 function updateAll(updates) {
@@ -29,7 +29,6 @@ function updateAll(updates) {
 function destroy(id) {
   delete _cartItems[id];
 }
-
 
 var CartStore = assign({}, EventEmitter.prototype, {
 
@@ -60,12 +59,12 @@ AppDispatcher.register(function(action) {
 			CartStore.emitChange();
       break;
 
-    case TodoConstants.CART_ITEM_UPDATE:
+    case CartConstants.CART_ITEM_UPDATE:
 			update(action.id, {count: action.count});
 			CartStore.emitChange();
       break;
 
-    case TodoConstants.CART_ITEM_DESTROY:
+    case CartConstants.CART_ITEM_DESTROY:
       destroy(action.id);
       CartStore.emitChange();
       break;

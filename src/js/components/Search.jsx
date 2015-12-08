@@ -1,5 +1,4 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 var Link = require('react-router').Link;
 
 var App = require('../app.jsx');

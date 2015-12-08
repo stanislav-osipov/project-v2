@@ -1,12 +1,11 @@
 var _ = require('underscore');
 
 var React = require('react');
-var ReactDOM = require('react-dom');
 var Link = require('react-router').Link;
 
 var Gallery = require('./Gallery.jsx');
 
-var cart = require('../app.jsx').cart;
+var CartActions = require('../actions/CartActions');
 
 var WareCard = React.createClass({
 	getInitialState: function(){
@@ -21,20 +20,8 @@ var WareCard = React.createClass({
 		this.state = this.getInitialState();
 	},
 	
-	handleClickToCart: function() {
-		var self = this;
-		
-		if (!_.find(cart.list, function(ware){return ware.item.name == self.props.item.name;})) {
-				if (~this.props.item.ref.indexOf("/") == 0) {
-					this.props.item.ref = this.props.categoryName + "/" + this.props.item.ref;	
-				}
-				var newId = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-				cart.list.push( {id: newId, item: this.props.item, count: this.state.count});
-				cart.summary.price = cart.summary.price + this.state.count * this.props.item.price;
-				cart.summary.count++;
-		}
-		
-		//cart.count.push(this.state.count)
+	handleClickToCart: function() {		
+		CartActions.create(this.props.item, this.state.count);
 	},
 		
   render: function () {

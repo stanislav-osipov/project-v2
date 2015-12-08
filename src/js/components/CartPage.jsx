@@ -1,16 +1,44 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 var Link = require('react-router').Link;
 
 var Header = require('./Header.jsx');
 var Footer = require('./Footer.jsx');
 var CartList = require('./CartList.jsx');
 
-var cart = require('../app.jsx').cart;
-
 var CartStore = require('../stores/CartStore');
 
+function getSummary(obj) {
+	var price = 0;
+	for (var id in obj) {
+		price = price + obj[id].item.price * obj[id].count;
+	}
+			
+	return {
+		price:	price,
+		count: Object.keys(obj).length
+	}
+};
+
+function getItemsState() {
+	return {
+		allItems: CartStore.getAll(),
+		summary: getSummary(CartStore.getAll())
+	};
+};
+
 var CartPage = React.createClass({
+	getInitialState: function() {
+		return getItemsState();
+	},
+	
+	componentDidMount: function() {
+    CartStore.addChangeListener(this._onChange);
+  },
+	
+	componentWillUnmount: function() {
+    CartStore.removeChangeListener(this._onChange);
+  },
+	
   render: function () {
     var self = this;
 		
@@ -22,7 +50,7 @@ var CartPage = React.createClass({
 				
 				<div className="body-wrapper">		
 							
-					<CartList waresList={cart.list} summary={cart.summary}/>
+					<CartList waresList={this.state.allItems} summary={this.state.summary}/>
 
 					<div className="page__footer">
 						<Footer />
@@ -30,6 +58,10 @@ var CartPage = React.createClass({
 				</div>
 			</div>
     );
+  },
+	
+	_onChange: function() {
+    this.setState(getItemsState());
   }
 });
 

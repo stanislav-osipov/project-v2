@@ -11,14 +11,6 @@ function CatalogItem(name, image, ref) {
 	this.ref = ref
 };
 
-var cart = {
-	summary: {
-		count: 0,
-		price: 0
-	},
-	list: []
-};
-
 var categories = [ //for search pop-up
 	{ name: 'Volleyball gear', url: '/wares/volleyball'},
 	{ name: 'Basketball gear', url: '/wares/basketball'},
@@ -35,7 +27,6 @@ var categories = [ //for search pop-up
 
 module.exports.CatalogItem = CatalogItem;
 module.exports.categories = categories;
-module.exports.cart = cart;
 
 var CategoryPage = require('./components/CategoryPage.jsx');
 var WaresPage = require('./components/WaresPage.jsx');

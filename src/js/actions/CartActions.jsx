@@ -1,5 +1,5 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-var CartConstants = require('../constants/TodoConstants');
+var CartConstants = require('../constants/CartConstants');
 
 var CartActions = {
 
