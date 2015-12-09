@@ -4,19 +4,32 @@ function CatalogItem(name, image, ref) {
 	this.ref = ref
 };
 
-function CategoryItem(name, image, ref, count) {
-	CatalogItem.call(this, name, image, ref);
-	this.count = count;
-}
-CategoryItem.prototype = Object.create(CatalogItem.prototype)
+function WaresItem(name, image, ref, price) {
+	CatalogItem.call(this, name, image, ref)
+	this.price = price
+};
+WaresItem.prototype = Object.create(CatalogItem.prototype);
 
-var categories = [];
+var wares = {volleyball: [], basketball: [], football: [], gym: [], cycling: [], athletic: []};
+wares.volleyball.push(new WaresItem("Nice ball", "volleyball/ball_mik.jpg", "Nice Ball", "$555"));
+wares.volleyball.push(new WaresItem("Beach ball", "volleyball/ball_beach.jpg", "Beach Ball", "$444"));
 
-categories.push(new CategoryItem("Volleyball gear", "volleyball.jpg", "volleyball", "32"));
-categories.push(new CategoryItem("Basketball gear", "basketball.jpg", "basketball", "41"));
-categories.push(new CategoryItem("Football gear", "football.jpg", "football", "54"));
-categories.push(new CategoryItem("Gym gear", "gym.jpg", "gym", "17"));
-categories.push(new CategoryItem("Cycling gear", "cycling.jpg", "cycling", "23"));
-categories.push(new CategoryItem("Athletic gear", "athlet.jpg", "athletic", "11"));
+wares.basketball.push(new WaresItem("Nice shoes", "volleyball/vol_shoes.jpg", "Nice Shoes", "$333"));
+wares.basketball.push(new WaresItem("Nice knee pads", "volleyball/knee_pad.jpg", "Nice Knee Pads", "$111"));
+wares.basketball.push(new WaresItem("Nice beach net", "volleyball/beach_net.jpg", "Nice Beach Net", "$1111"));
 
-module.exports = categories;
+wares.football.push(new WaresItem("Nice ball", "volleyball/ball_mik.jpg", "Nice Ball", "$555"));
+wares.football.push(new WaresItem("Beach ball", "volleyball/ball_beach.jpg", "Beach Ball", "$444"));
+wares.football.push(new WaresItem("Nice shoes", "volleyball/vol_shoes.jpg", "Nice Shoes", "$333"));
+
+wares.gym.push(new WaresItem("Nice knee pads", "volleyball/knee_pad.jpg", "Nice Knee Pads", "$111"));
+wares.gym.push(new WaresItem("Nice beach net", "volleyball/beach_net.jpg", "Nice Beach Net", "$1111"));
+
+wares.cycling.push(new WaresItem("Nice ball", "volleyball/ball_mik.jpg", "Nice Ball", "$555"));
+wares.cycling.push(new WaresItem("Beach ball", "volleyball/ball_beach.jpg", "Beach Ball", "$444"));
+
+wares.athletic.push(new WaresItem("Nice shoes", "volleyball/vol_shoes.jpg", "Nice Shoes", "$333"));
+wares.athletic.push(new WaresItem("Nice knee pads", "volleyball/knee_pad.jpg", "Nice Knee Pads", "$111"));
+wares.athletic.push(new WaresItem("Nice beach net", "volleyball/beach_net.jpg", "Nice Beach Net", "$1111"));
+
+module.exports = wares;

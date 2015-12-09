@@ -5,9 +5,13 @@ var app = express();
 app.use(bodyParser.json());
 
 data = {
+	categories: [],
+	menuCategories: [],
 	waresList: []
 };
-data.waresList = require('./WaresList.js');
+data.categories = require('./categories.js');
+data.menuCategories = require('./menuCategories.js');
+data.waresList = require('./waresList.js');
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -16,7 +20,15 @@ app.use(function(req, res, next) {
 });
 
 app.get('/wares', function (req, res, next) {
-  res.send(data.waresList);
+  res.send(data.categories);
+});
+
+app.get('/menu', function (req, res, next) {
+  res.send(data.menuCategories);
+});
+
+app.get('/wares/:categoryName', function (req, res, next) {
+  res.send(data.waresList[req.params.categoryName]);
 });
 
 app.listen(3000);

@@ -19,11 +19,11 @@ var WareCardPage = React.createClass({
 		ItemFull.prototype = Object.create(CatalogItem.prototype)
 		
 		var items = {
-			'Nice Ball': new ItemFull("Nice ball", "volleyball/ball_mik.jpg", "Nice Ball", "This is a very nice ball. Official size and weight. Round.", 555, 5),
-			'Beach Ball': new ItemFull("Nice beach ball", "volleyball/ball_beach.jpg", "Beach Ball", "This is a very nice beach ball. Official size and weight. Round.", 444, 4),
-			'Nice Shoes': new ItemFull("Nice shoes", "volleyball/vol_shoes.jpg", "Nice Shoes", "This is a very nice shoes. Little weight and high durability.", 333, 3),
-			'Nice Knee Pads': new ItemFull("Nice knee pads", "volleyball/knee_pad.jpg", "Nice Knee Pads", "This is a very nice knee pads. Little weight and high durability.", 111, 4),
-			'Nice Beach Net': new ItemFull("Nice beach net", "volleyball/beach_net.jpg", "Nice Beach Net", "This is a very nice beach net. Yellow.", 1111, 3)
+			'Nice Ball': new ItemFull("Nice ball", "volleyball/ball_mik.jpg", "volleyball/Nice Ball", "This is a very nice ball. Official size and weight. Round.", 555, 5),
+			'Beach Ball': new ItemFull("Nice beach ball", "volleyball/ball_beach.jpg", "volleyball/Beach Ball", "This is a very nice beach ball. Official size and weight. Round.", 444, 4),
+			'Nice Shoes': new ItemFull("Nice shoes", "volleyball/vol_shoes.jpg", "volleyball/Nice Shoes", "This is a very nice shoes. Little weight and high durability.", 333, 3),
+			'Nice Knee Pads': new ItemFull("Nice knee pads", "volleyball/knee_pad.jpg", "volleyball/Nice Knee Pads", "This is a very nice knee pads. Little weight and high durability.", 111, 4),
+			'Nice Beach Net': new ItemFull("Nice beach net", "volleyball/beach_net.jpg", "volleyball/Nice Beach Net", "This is a very nice beach net. Yellow.", 1111, 3)
 		}
 
 		return {

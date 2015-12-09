@@ -6,6 +6,7 @@ var Link = require('react-router').Link;
 var Gallery = require('./Gallery.jsx');
 
 var CartActions = require('../actions/CartActions');
+var CartStore = require('../stores/CartStore');
 
 var WareCard = React.createClass({
 	getInitialState: function(){
@@ -20,8 +21,19 @@ var WareCard = React.createClass({
 		this.state = this.getInitialState();
 	},
 	
-	handleClickToCart: function() {		
-		CartActions.create(this.props.item, this.state.count);
+	handleClickToCart: function() {
+		var exist = false;
+		var cartList = CartStore.getAll();
+		for (var key in cartList) {
+			if (cartList[key].item.name == this.props.item.name) {
+				exist = true;
+				CartActions.update(key, this.state.count);
+				break;
+			};
+		};
+		if (!exist) {
+			CartActions.create(this.props.item, this.state.count);
+		};
 	},
 		
   render: function () {
