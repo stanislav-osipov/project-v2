@@ -37,7 +37,11 @@ var AddressPage = require('./components/AddressPage.jsx');
 
 var App = React.createClass({
 	render() {
-		return (<div className="Application"> {this.props.children} </div>);
+		return (
+			<div className="Application"> 
+				{this.props.children} 
+			</div>
+		);
 	}
 });
 
