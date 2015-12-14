@@ -5,7 +5,11 @@ var Header = require('./Header.jsx');
 var Footer = require('./Footer.jsx');
 var CartList = require('./CartList.jsx');
 
+var Navigation = require('./Navigation.jsx');
+
 var CartStore = require('../stores/CartStore');
+var AccountStore = require('../stores/AccountStore');
+var AccountActions = require('../actions/AccountActions');
 
 function getSummary(obj) {
 	var price = 0;
@@ -37,6 +41,12 @@ var CartPage = React.createClass({
 	
 	componentWillUnmount: function() {
     CartStore.removeChangeListener(this._onChange);
+  },
+	
+	componentWillMount: function() {
+		if (!AccountStore.getAccountState().logged) {
+			AccountActions.update({needLogin: true});
+		}
   },
 	
   render: function () {
