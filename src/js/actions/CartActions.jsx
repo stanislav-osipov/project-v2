@@ -3,11 +3,12 @@ var CartConstants = require('../constants/CartConstants');
 
 var CartActions = {
 
-  create: function(item, count) {
+  create: function(item, count, save) {
     AppDispatcher.dispatch({
       actionType: CartConstants.CART_ITEM_CREATE,
       item: item,
-			count: count
+			count: count,
+			save: save
     });
   },
 

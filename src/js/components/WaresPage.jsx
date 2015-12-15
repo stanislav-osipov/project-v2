@@ -10,6 +10,10 @@ var Footer = require('./Footer.jsx');
 var WaresList = require('./WaresList.jsx');
 var Menu = require('./Menu.jsx');
 
+var AccountActions = require('../actions/AccountActions');
+
+var apiPath = require('../app.jsx').apiPath;
+
 var WaresPage = React.createClass({	
 	getInitialState: function() {
     return {
@@ -18,8 +22,12 @@ var WaresPage = React.createClass({
 		};
   },
 	
+	componentWillMount: function() {
+		AccountActions.update({needLogin: false});		
+	},
+	
 	componentDidMount: function() {
-		$.get("http://localhost:3000/menu", function(result) {
+		$.get(apiPath + "/menu", function(result) {
       if (this.isMounted()) {
         this.setState({
           menuCategories: result,
@@ -28,7 +36,7 @@ var WaresPage = React.createClass({
     }.bind(this));
 		
 		//same as Receive
-		$.get("http://localhost:3000/wares/" + this.props.params.name, function(result) {
+		$.get(apiPath + "/wares/" + this.props.params.name, function(result) {
       if (this.isMounted()) {
         this.setState({
           waresList: result,
@@ -38,7 +46,7 @@ var WaresPage = React.createClass({
 	},
 	
 	componentWillReceiveProps: function(nextProps) {
-		$.get("http://localhost:3000/wares/" + nextProps.params.name, function(result) {
+		$.get(apiPath + "/wares/" + nextProps.params.name, function(result) {
       if (this.isMounted()) {
         this.setState({
           waresList: result,

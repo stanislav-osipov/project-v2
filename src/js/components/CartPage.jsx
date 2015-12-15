@@ -44,7 +44,7 @@ var CartPage = React.createClass({
   },
 	
 	componentWillMount: function() {
-		if (!AccountStore.getAccountState().logged) {
+		if (!AccountStore.getAcc().logged) {
 			AccountActions.update({needLogin: true});
 		}
   },

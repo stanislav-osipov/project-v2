@@ -13,6 +13,8 @@ var AccountActions = require('../actions/AccountActions');
 var AccountStore = require('../stores/AccountStore');
 var CartStore = require('../stores/CartStore');
 
+var apiPath = require('../app.jsx').apiPath;
+
 function getSummary(obj) {
 	var price = 0;
 	for (var id in obj) {
@@ -48,9 +50,18 @@ var Navigation = React.createClass({
 			count: getItemsState().summary.count
 			};
   },
+	
+	closeClick: function() {
+		if (!AccountStore.getAcc().logged && AccountStore.getAcc().needLogin) {
+			this.close();
+			window.location.href = "#/";			
+		}	else {
+			this.close();
+		}
+  },
 
   close: function() {
-		if (!AccountStore.getAccountState().needLogin) {
+		if (!AccountStore.getAcc().needLogin) {
 			this.setState({ showModal: false });			
 		}
   },
@@ -60,7 +71,14 @@ var Navigation = React.createClass({
   },
 
   open: function() {
-    this.setState({ showModal: true });
+		if (AccountStore.getAcc().logged) {
+			AccountActions.update({logged: false, remember: false});
+			CartStore.setAll({});
+			localStorage.cart = "";
+			localStorage.token = "";
+		} else {
+			this.setState({ showModal: true });			
+		}
   },
 	
 	openReg: function() {
@@ -88,65 +106,91 @@ var Navigation = React.createClass({
 	},
 
 	onRegClick: function() {
-		$.post("http://localhost:3000/users", {mail: this.state.mailReg, psw: this.state.pswReg}, function(result, status) {
-      if (this.isMounted()) {
-				if (status == "success") {
-					var self = this;
-					this.setState({enterResult: "Registration passed successfully!", resColor: "green"});
-					this.setState({psw: this.state.pswReg, mail: this.state.mailReg});
-					this.setState({pswReg: "", mailReg: ""});
-					window.setTimeout(function(){self.closeReg()}, 1500);					
-				} else {
-					this.setState({enterResult: "This e-mail address is already in use!", resColor: "red"});
-					this.setState({pswReg: "", mailReg: ""});					
+		if (!!this.state.mailReg && !!this.state.pswReg){
+			$.post(apiPath + "/users", {mail: this.state.mailReg, psw: this.state.pswReg}, function(result, status) {
+				if (this.isMounted()) {
+					if (status == "success") {
+						var self = this;
+						this.setState({enterResult: "Registration passed successfully!", resColor: "green"});
+						this.setState({psw: this.state.pswReg, mail: this.state.mailReg});
+						this.setState({pswReg: "", mailReg: ""});
+						window.setTimeout(function(){self.closeReg()}, 1500);					
+					} else {
+						this.setState({enterResult: "This e-mail address is already in use!", resColor: "red"});
+						this.setState({pswReg: "", mailReg: ""});					
+					}
+					//console.log(result.id);
 				}
-				//console.log(result.id);
-      }
-    }.bind(this));
+			}.bind(this));
+		} else {
+			this.setState({enterResult: "Fields requiered", resColor: "red"});
+		}
 	},
 	
 	onSignClick: function() {
-		$.post("http://localhost:3000/users/" + this.state.mail, {psw: this.state.psw}, function(result, status) {
-      if (this.isMounted()) {
-				if (status == "success") {
-					var self = this;
-					this.setState({enterSignResult: "Signing in successfully!", resColorSign: "green"});
-					if (this.state.check){
-						localStorage.setItem('user', result.id);
+		if (!!this.state.mail && !!this.state.psw){
+			$.post(apiPath + "/loginUsers/" + this.state.mail, {psw: this.state.psw}, function(result, status) {
+				if (this.isMounted()) {
+					if (status == "success") {
+						var self = this;
+						this.setState({enterSignResult: "Signing in successfully!", resColorSign: "green"});
 						AccountActions.update({logged: true, id: result.id});
 						AccountActions.update({needLogin: false});
-						//console.log(AccountStore.getAccountState());
-					};
-					window.setTimeout(function(){self.close()}, 1500);
-					this.setState({psw: "", mail: ""});
-				} else {
-					this.setState({enterSignResult: "Wrong password or email", resColorSign: "red"});
-					this.setState({psw: ""});		
+						localStorage.cart = JSON.stringify(CartStore.getAll());
+						if (this.state.check){
+							localStorage.setItem('token', result.token);
+							localStorage.setItem('id', result.id);
+							AccountActions.update({remember: true});
+						} else {
+							localStorage.removeItem('token');
+						}
+						window.setTimeout(function(){self.close()}, 1500);
+						this.setState({psw: "", mail: ""});
+					} else {
+						this.setState({enterSignResult: "Wrong password or email", resColorSign: "red"});
+						this.setState({psw: ""});		
+					}
 				}
-      }
-    }.bind(this));
+			}.bind(this));
+		} else {
+			this.setState({enterSignResult: "Fields requiered", resColorSign: "red"});
+		};
 	},
 	
 	componentDidMount: function() {
-		if (AccountStore.getAccountState().needLogin) {
+		if (AccountStore.getAcc().needLogin) {
 			this.setState({ showModal: true });
-			//AccountActions.update({needLogin: false});
 		}
 		CartStore.addChangeListener(this._onChange);
+		AccountStore.addChangeListener(this._onChangeAccount);
 	},
 	
 	componentWillUnmount: function() {
     CartStore.removeChangeListener(this._onChange);
+		AccountStore.removeChangeListener(this._onChangeAccount);
+  },
+		
+	_onChange: function() {
+		if (this.isMounted()) {
+			this.setState({count: getItemsState().summary.count});
+		}
   },
 	
-	_onChange: function() {
-    this.setState({count: getItemsState().summary.count});
+	_onChangeAccount: function() {
+    if (!AccountStore.getAcc().needLogin) {
+			if (this.isMounted()) {
+				this.setState({ showModal: false });				
+			}
+		}
   },
 	
   render: function () {
     return (
       <div className="navigation">
-				<img className="navigation__image" src="images/navigation/account.png" alt="acc" onClick={this.open}/>
+				<div className="navigation__image--interactive">
+					<img className="navigation__image" src="images/navigation/account.png" alt="acc" onClick={this.open}/>
+					<img className="navigation__status" src={AccountStore.getAcc().logged ? "images/navigation/login.png" : "images/navigation/nologin.png"} alt="login status"/>
+				</div>
 			
 				<Link to="/cart">
 					<div className="navigation__image--interactive">
@@ -169,7 +213,7 @@ var Navigation = React.createClass({
           </Modal.Body>
           <Modal.Footer>
 						<ButtonToolbar>
-							<Button onClick={this.close}>Close</Button>
+							<Button onClick={this.closeClick}>Close</Button>
 							<Button bsStyle="warning" onClick={this.openReg}>Register</Button>
 							
 							<OverlayTrigger trigger="click" rootClose placement="bottom" overlay={<Popover id="SignInNotify"> 

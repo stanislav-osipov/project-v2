@@ -7,6 +7,7 @@ var Gallery = require('./Gallery.jsx');
 
 var CartActions = require('../actions/CartActions');
 var CartStore = require('../stores/CartStore');
+var AccountStore = require('../stores/AccountStore');
 
 var WareCard = React.createClass({
 	getInitialState: function(){
@@ -32,7 +33,7 @@ var WareCard = React.createClass({
 			};
 		};
 		if (!exist) {
-			CartActions.create(this.props.item, this.state.count);
+			CartActions.create(this.props.item, this.state.count, AccountStore.getAcc().remember);
 		};
 	},
 		

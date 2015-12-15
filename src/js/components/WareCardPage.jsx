@@ -8,6 +8,8 @@ var Footer = require('./Footer.jsx');
 var WareCard = require('./WareCard.jsx');
 var Path = require('./Path.jsx');
 
+var AccountActions = require('../actions/AccountActions');
+
 var WareCardPage = React.createClass({
 	getDefaultProps: function () {
 		function ItemFull(name, image, ref, description, price, rating) {
@@ -29,6 +31,10 @@ var WareCardPage = React.createClass({
 		return {
 		  item: items
 		}
+	},
+	
+	componentWillMount: function() {
+		AccountActions.update({needLogin: false});
 	},
 
 	render: function () {

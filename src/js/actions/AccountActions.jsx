@@ -8,6 +8,14 @@ var AccountActions = {
       actionType: AccountConstants.ACCOUNT_STATE_UPDATE,
       updates: updates
     });
+  },
+	
+	autoLogin: function(id, token) {
+    AppDispatcher.dispatch({
+      actionType: AccountConstants.ACCOUNT_AUTO_LOGIN,
+      id: id,
+      token: token
+    });
   }
 
 };

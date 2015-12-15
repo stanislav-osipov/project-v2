@@ -7,6 +7,10 @@ var Header = require('./Header.jsx');
 var Footer = require('./Footer.jsx');
 var CategoryList = require('./CategoryList.jsx');
 
+var AccountActions = require('../actions/AccountActions');
+
+var apiPath = require('../app.jsx').apiPath;
+
 var CategoryPage = React.createClass({
 	
 	getInitialState: function() {
@@ -15,8 +19,12 @@ var CategoryPage = React.createClass({
     };
   },
 	
+	componentWillMount: function() {
+		AccountActions.update({needLogin: false});
+	},
+	
 	componentDidMount: function() {
-		$.get("http://localhost:3000/wares", function(result) {
+		$.get(apiPath + "/wares", function(result) {
       if (this.isMounted()) {
         this.setState({
           categories: result,

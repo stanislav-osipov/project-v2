@@ -56,12 +56,28 @@ app.post('/users', function (req, res, next) {
 	}
 });
 
-app.post('/users/:mail', function (req, res, next) {
+app.post('/loginUsers/:mail', function (req, res, next) {
 	var requestedUser = _.findWhere(jsonUsers, {"mail": req.params.mail});
 	if (!!requestedUser) {
 		if (requestedUser.psw == req.body.psw) {
 			var id = _.findKey(jsonUsers , requestedUser);
-			res.send({"id": id});
+			var token = (+new Date() + Math.floor(Math.random() * 100000 * (id + 1))).toString(36);
+			jsonUsers[id].token = token;
+			fs.writeFileSync('users.json', JSON.stringify(jsonUsers));
+			res.send({"token": token, "id": id});
+		} else {
+			res.sendStatus(304);
+		}
+	} else {
+		res.sendStatus(304);
+	}
+});
+
+app.post('/autoLogin', function (req, res, next) {
+	var requestedUser = jsonUsers[req.body.id];
+	if (!!requestedUser) {
+		if (requestedUser.token == req.body.token) {
+			res.sendStatus(200);
 		} else {
 			res.sendStatus(304);
 		}

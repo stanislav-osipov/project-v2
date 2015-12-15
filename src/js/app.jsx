@@ -25,8 +25,12 @@ var categories = [ //for search pop-up
 	{ name: 'Nice beach net', url: '/wares/basketball/Nice Beach Net'}
 ];
 
+
+var apiPath = "http://10.27.13.204:3000";//http://localhost:3000
+
 module.exports.CatalogItem = CatalogItem;
 module.exports.categories = categories;
+module.exports.apiPath = apiPath;
 
 var CategoryPage = require('./components/CategoryPage.jsx');
 var WaresPage = require('./components/WaresPage.jsx');
@@ -35,8 +39,17 @@ var CartPage = require('./components/CartPage.jsx');
 var CardsPage = require('./components/CardsPage.jsx');
 var AddressPage = require('./components/AddressPage.jsx');
 
+var AccountActions = require('./actions/AccountActions');
+
+var AccountStore = require('./stores/AccountStore');
+
 var App = React.createClass({
-	render() {
+	
+	componentWillMount: function() {
+		AccountActions.autoLogin(localStorage.id, localStorage.token);
+	},
+	
+	render: function() {
 		return (
 			<div className="Application"> 
 				{this.props.children} 

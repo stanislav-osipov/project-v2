@@ -146,3 +146,20 @@ gulp.task('serve', ['libs', 'html:watch', 'js:watch', 'styles:watch', 'webserver
 gulp.task('b-build', ['html', 'b-browserify', 'styles', 'images'])
 
 gulp.task('b-serve', ['b-watch', 'styles:watch', 'html:watch', 'webserver'])
+
+var config = {
+    server: {
+        baseDir: "./dest"
+    },
+    tunnel: true,
+    host: 'localhost',
+    port: 9090,
+    logPrefix: "Frontend-dev"
+};
+
+var browserSync = require("browser-sync");
+var reload = browserSync.reload;
+
+gulp.task('webserverG', function () {
+    browserSync(config);
+});
