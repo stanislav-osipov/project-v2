@@ -14,26 +14,50 @@ function create(item, count, save) {
   _cartItems[id] = {
     id: id,
     item: item,
-		count: count,
-		save: save
+		count: count
   };
 	
 	if (save) {
-		localStorage.cart = JSON.stringify(CartStore.getAll());
+		localStorage.cart = JSON.stringify(_cartItems);
+	};
+}
+
+function update(id, updates, save) {
+  _cartItems[id] = assign({}, _cartItems[id], updates);
+	
+	if (save) {
+		localStorage.cart = JSON.stringify(_cartItems);
+	};
+}
+
+function remove(id, save) {
+  delete _cartItems[id];
+	
+	if (save) {
+		localStorage.cart = JSON.stringify(_cartItems);
 	}
 }
 
-function update(id, updates) {
-  _cartItems[id] = assign({}, _cartItems[id], updates);
-	localStorage.cart = JSON.stringify(_cartItems);
-}
-
-function destroy(id) {
-  delete _cartItems[id];
-	localStorage.cart = JSON.stringify(_cartItems);
+function getSummary(obj) {
+	var price = 0;
+	for (var id in obj) {
+		price = price + obj[id].item.price * obj[id].count;
+	}
+			
+	return {
+		price:	price,
+		count: Object.keys(obj).length
+	}
 }
 
 var CartStore = assign({}, EventEmitter.prototype, {
+	
+	getItemsState: function() {
+		return {
+			allItems: _cartItems,
+			summary: getSummary(_cartItems)
+		};
+	},
 
   getAll: function() {
     return _cartItems;
@@ -42,6 +66,15 @@ var CartStore = assign({}, EventEmitter.prototype, {
 	setAll: function(savedCart) {
 		_cartItems = savedCart;
 		this.emitChange();
+	},
+	
+	Exist: function(item) {
+		for (var key in _cartItems) {
+			if (_cartItems[key].item.name == item.name) {
+				return key;
+			};
+		};
+		return 0;	
 	},
 
   emitChange: function() {
@@ -59,8 +92,7 @@ var CartStore = assign({}, EventEmitter.prototype, {
 
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
-  var text;
-
+	
   switch(action.actionType) {
     case CartConstants.CART_ITEM_CREATE:
 			create(action.item, action.count, action.save);
@@ -68,12 +100,12 @@ AppDispatcher.register(function(action) {
       break;
 
     case CartConstants.CART_ITEM_UPDATE:
-			update(action.id, {count: action.count});
+			update(action.id, {count: action.count}, action.save);
 			CartStore.emitChange();
       break;
 
-    case CartConstants.CART_ITEM_DESTROY:
-      destroy(action.id);
+    case CartConstants.CART_ITEM_REMOVE:
+      remove(action.id, action.save);
       CartStore.emitChange();
       break;
 

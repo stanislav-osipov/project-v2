@@ -2,15 +2,16 @@ var React = require('react');
 var Link = require('react-router').Link;
 
 var CartActions = require('../actions/CartActions');
+var AccountStore = require('../stores/AccountStore');
 
 var CartListItem = React.createClass({
 	
 	handleChange: function(e){			
-		CartActions.update(this.props.ware.id, e.target.value);
+		CartActions.update(this.props.ware.id, e.target.value, AccountStore.getAcc().remember);
 	},	 
 	
 	handleRemoveClick: function() {
-		CartActions.destroy(this.props.ware.id);
+		CartActions.remove(this.props.ware.id, AccountStore.getAcc().remember);
 	},
 		
 	render: function () {

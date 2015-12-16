@@ -12,18 +12,20 @@ var CartActions = {
     });
   },
 
-  update: function(id, count) {
+  update: function(id, count, save) {
     AppDispatcher.dispatch({
       actionType: CartConstants.CART_ITEM_UPDATE,
       id: id,
-      count: count
+      count: count,
+			save: save
     });
   },
 
-  destroy: function(id) {
+  remove: function(id, save) {
     AppDispatcher.dispatch({
-      actionType: CartConstants.CART_ITEM_DESTROY,
-      id: id
+      actionType: CartConstants.CART_ITEM_REMOVE,
+      id: id,
+			save: save
     });
   }
 

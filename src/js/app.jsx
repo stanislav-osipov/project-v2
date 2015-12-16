@@ -38,6 +38,8 @@ var WareCardPage = require('./components/WareCardPage.jsx');
 var CartPage = require('./components/CartPage.jsx');
 var CardsPage = require('./components/CardsPage.jsx');
 var AddressPage = require('./components/AddressPage.jsx');
+var SuccessPage = require('./components/SuccessPage.jsx');
+var ErrorPage = require('./components/ErrorPage.jsx');
 
 var AccountActions = require('./actions/AccountActions');
 
@@ -68,6 +70,8 @@ window.addEventListener("DOMContentLoaded", function() {
 					<Route path="cart" component={CartPage}/>
 					<Route path="cards" component={CardsPage}/>
 					<Route path="address" component={AddressPage}/>
+					<Route path="success" component={SuccessPage}/>
+					<Route path="*" component={ErrorPage}/>
 				</Route>
 			</Router>
 		), document.getElementById('page'));

@@ -9,32 +9,37 @@ var WareCard = require('./WareCard.jsx');
 var Path = require('./Path.jsx');
 
 var AccountActions = require('../actions/AccountActions');
+var DataActions = require('../actions/DataActions');
+var DataStore = require('../stores/DataStore');
 
 var WareCardPage = React.createClass({
-	getDefaultProps: function () {
-		function ItemFull(name, image, ref, description, price, rating) {
-			CatalogItem.call(this, name, image, ref)
-			this.description = description
-			this.price = price
-			this.rating = rating
-		}
-		ItemFull.prototype = Object.create(CatalogItem.prototype)
-		
-		var items = {
-			'Nice Ball': new ItemFull("Nice ball", "volleyball/ball_mik.jpg", "volleyball/Nice Ball", "This is a very nice ball. Official size and weight. Round.", 555, 5),
-			'Beach Ball': new ItemFull("Nice beach ball", "volleyball/ball_beach.jpg", "volleyball/Beach Ball", "This is a very nice beach ball. Official size and weight. Round.", 444, 4),
-			'Nice Shoes': new ItemFull("Nice shoes", "volleyball/vol_shoes.jpg", "volleyball/Nice Shoes", "This is a very nice shoes. Little weight and high durability.", 333, 3),
-			'Nice Knee Pads': new ItemFull("Nice knee pads", "volleyball/knee_pad.jpg", "volleyball/Nice Knee Pads", "This is a very nice knee pads. Little weight and high durability.", 111, 4),
-			'Nice Beach Net': new ItemFull("Nice beach net", "volleyball/beach_net.jpg", "volleyball/Nice Beach Net", "This is a very nice beach net. Yellow.", 1111, 3)
-		}
-
-		return {
-		  item: items
-		}
-	},
+	getInitialState: function() {
+    return {
+      item: {image: "empty.png"}
+		};
+  },
 	
 	componentWillMount: function() {
 		AccountActions.update({needLogin: false});
+	},
+	
+	componentDidMount: function() {
+		DataStore.addChangeWareListener(this._onWareReceive);
+		DataActions.receiveWare(this.props.params.itemName);
+	},
+	
+	componentWillUnmount: function() {
+    DataStore.removeChangeWareListener(this._onWareReceive);
+  },
+	
+	componentWillReceiveProps: function(nextProps) {
+		DataActions.receiveWare(nextProps.params.itemName);
+	},
+	
+	_onWareReceive: function() {
+		this.setState({
+			item: DataStore.getWare(),
+		});
 	},
 
 	render: function () {
@@ -50,7 +55,7 @@ var WareCardPage = React.createClass({
 				
 					<div id="content-wrapper" className="content-wrapper">
 						<div className="page__content">
-							<WareCard item={this.props.item[this.props.params.itemName]} categoryName={this.props.params.categoryName}/>
+							<WareCard item={this.state.item} categoryName={this.props.params.categoryName}/>
 						</div>
 					</div>
 					

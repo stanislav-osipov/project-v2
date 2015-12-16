@@ -15,25 +15,6 @@ var CartStore = require('../stores/CartStore');
 
 var apiPath = require('../app.jsx').apiPath;
 
-function getSummary(obj) {
-	var price = 0;
-	for (var id in obj) {
-		price = price + obj[id].item.price * obj[id].count;
-	}
-			
-	return {
-		price:	price,
-		count: Object.keys(obj).length
-	}
-};
-
-function getItemsState() {
-	return {
-		allItems: CartStore.getAll(),
-		summary: getSummary(CartStore.getAll())
-	};
-}; //move logic to store
-
 var Navigation = React.createClass({	
 	getInitialState: function() {
     return { showModal: false, 
@@ -47,7 +28,7 @@ var Navigation = React.createClass({
 			enterSignResult: "",
 			resColor: "black",
 			resColorSign: "black",
-			count: getItemsState().summary.count
+			count: CartStore.getItemsState().summary.count
 			};
   },
 	
@@ -172,7 +153,7 @@ var Navigation = React.createClass({
 		
 	_onChange: function() {
 		if (this.isMounted()) {
-			this.setState({count: getItemsState().summary.count});
+			this.setState({count: CartStore.getItemsState().summary.count});
 		}
   },
 	

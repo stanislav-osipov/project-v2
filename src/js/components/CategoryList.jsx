@@ -3,8 +3,6 @@ var Link = require('react-router').Link;
 
 var CategoryList = React.createClass({
   render: function () {
-    var self = this;
-
     var categories = this.props.categories.map(function(category, key) {
       return (
         <div className="item content__item" key={key}>

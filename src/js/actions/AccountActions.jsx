@@ -16,8 +16,24 @@ var AccountActions = {
       id: id,
       token: token
     });
+  },
+	
+	login: function(mail, psw) {
+    AppDispatcher.dispatch({
+      actionType: AccountConstants.ACCOUNT_LOGIN,
+      mail: mail,
+      psw: psw
+    });
+  },
+	
+	reg: function(mail, psw) {
+    AppDispatcher.dispatch({
+      actionType: AccountConstants.ACCOUNT_REG,
+      mail: mail,
+      psw: psw
+    });
   }
-
+	
 };
 
 module.exports = AccountActions;

@@ -28,7 +28,7 @@ var WareCard = React.createClass({
 		for (var key in cartList) {
 			if (cartList[key].item.name == this.props.item.name) {
 				exist = true;
-				CartActions.update(key, this.state.count);
+				CartActions.update(key, this.state.count, AccountStore.getAcc().remember);
 				break;
 			};
 		};

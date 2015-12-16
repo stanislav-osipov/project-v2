@@ -11,14 +11,15 @@ var WaresList = require('./WaresList.jsx');
 var Menu = require('./Menu.jsx');
 
 var AccountActions = require('../actions/AccountActions');
-
-var apiPath = require('../app.jsx').apiPath;
+var DataActions = require('../actions/DataActions');
+var DataStore = require('../stores/DataStore');
 
 var WaresPage = React.createClass({	
 	getInitialState: function() {
     return {
       menuCategories: [],
-			waresList: []
+			waresList: [],
+			view: "Grid"
 		};
   },
 	
@@ -27,32 +28,39 @@ var WaresPage = React.createClass({
 	},
 	
 	componentDidMount: function() {
-		$.get(apiPath + "/menu", function(result) {
-      if (this.isMounted()) {
-        this.setState({
-          menuCategories: result,
-        });
-      }
-    }.bind(this));
-		
-		//same as Receive
-		$.get(apiPath + "/wares/" + this.props.params.name, function(result) {
-      if (this.isMounted()) {
-        this.setState({
-          waresList: result,
-        });
-      }
-    }.bind(this));
+		DataStore.addChangeMenuListener(this._onMenuReceive);
+		DataStore.addChangeWaresListListener(this._onListReceive);
+		DataActions.receiveMenu();
+		DataActions.receiveWaresList(this.props.params.name);
 	},
 	
+	componentWillUnmount: function() {
+    DataStore.removeChangeMenuListener(this._onMenuReceive);
+		DataStore.removeChangeWaresListListener(this._onListReceive);
+  },
+	
 	componentWillReceiveProps: function(nextProps) {
-		$.get(apiPath + "/wares/" + nextProps.params.name, function(result) {
-      if (this.isMounted()) {
-        this.setState({
-          waresList: result,
-        });
-      }
-    }.bind(this));
+		DataActions.receiveWaresList(nextProps.params.name);
+	},
+	
+	_onMenuReceive: function() {
+		this.setState({
+			menuCategories: DataStore.getCategoriesMenu(),
+		});
+	},
+	
+	_onListReceive: function() {
+		this.setState({
+			waresList: DataStore.getWaresList(),
+		});
+	},
+	
+	handleChangeView: function() {
+		if (this.state.view == "Grid") {
+			this.setState({ view: "List" });	
+		} else {
+			this.setState({ view: "Grid" });
+		};
 	},
 	
 	render: function() {
@@ -70,9 +78,9 @@ var WaresPage = React.createClass({
 					
 						<div className="page__content">
 							<div className="content__view-option">
-								<div className="view-option"> <Link to={"/"} className="item__link"> Grid View </Link> </div>
+								<div className="view-option"> <div className="item__link" onClick={this.handleChangeView}> {this.state.view} View </div> </div>
 							</div>
-							<WaresList wares={this.state.waresList} category={this.props.params.name}/>
+							<WaresList wares={this.state.waresList} category={this.props.params.name} view={this.state.view}/>
 						</div>
 					</div>
 					

@@ -190,7 +190,7 @@ hr {
 	}
 
 	&__link:visited {
-		color: #A66;
+		color: #666;/*#A66;*/
 		text-decoration: none;
 	}
 }
@@ -206,6 +206,10 @@ hr {
 	border-radius: 15px;
 	background-color: #DDD;
 	width: 80px;
+	
+	> div {
+		cursor: pointer ! important;
+	}
 }
 
 .cards {

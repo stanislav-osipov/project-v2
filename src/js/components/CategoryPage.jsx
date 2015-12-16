@@ -8,8 +8,8 @@ var Footer = require('./Footer.jsx');
 var CategoryList = require('./CategoryList.jsx');
 
 var AccountActions = require('../actions/AccountActions');
-
-var apiPath = require('../app.jsx').apiPath;
+var DataActions = require('../actions/DataActions');
+var DataStore = require('../stores/DataStore');
 
 var CategoryPage = React.createClass({
 	
@@ -24,13 +24,18 @@ var CategoryPage = React.createClass({
 	},
 	
 	componentDidMount: function() {
-		$.get(apiPath + "/wares", function(result) {
-      if (this.isMounted()) {
-        this.setState({
-          categories: result,
-        });
-      }
-    }.bind(this));
+		DataStore.addChangeListener(this._onDataReceive);
+		DataActions.receiveCategoryList();
+	},
+	
+	componentWillUnmount: function() {
+    DataStore.removeChangeListener(this._onDataReceive);
+  },
+	
+	_onDataReceive: function() {
+		this.setState({
+			categories: DataStore.getCategories(),
+		});
 	},
 	
 	render: function () {

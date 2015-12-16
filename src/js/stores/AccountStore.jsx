@@ -52,11 +52,19 @@ AppDispatcher.register(function(action) {
 
     case AccountConstants.ACCOUNT_STATE_UPDATE:
 			update(action.updates);
-			/*AccountStore.emitChange();*/
+			AccountStore.emitChange();
       break;
 			
 		case AccountConstants.ACCOUNT_AUTO_LOGIN:
 			autoLogin(action.id, action.token);
+			break;
+			
+		case AccountConstants.ACCOUNT_LOGIN:
+			login(action.mail, action.psw);
+			break;
+			
+		case AccountConstants.ACCOUNT_REG:
+			login(action.mail, action.psw);
 			break;
 
     default:

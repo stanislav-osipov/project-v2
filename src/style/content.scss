@@ -87,7 +87,7 @@
 	
 	&__link:visited,
 	{
-		color: #A66;
+		color: #666;/*#A66;*/
 		text-decoration: none;
 	}
 	
@@ -172,6 +172,8 @@
 	}
 
 	&__description hr{
+		margin-top: 10px;
+		margin-bottom: 10px;
 		border: 0;
 		height: 1px;
 		background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2));

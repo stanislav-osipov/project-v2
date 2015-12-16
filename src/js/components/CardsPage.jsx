@@ -4,7 +4,15 @@ var Link = require('react-router').Link;
 var Header = require('./Header.jsx');
 var Footer = require('./Footer.jsx');
 
+var CartStore = require('../stores/CartStore');
+
 var CardsPage = React.createClass({
+	
+	handleByu: function() {
+		CartStore.setAll({});
+		localStorage.cart = "";
+	},
+	
 	render: function () {
 		return (
 			<div className="page">
@@ -39,8 +47,8 @@ var CardsPage = React.createClass({
 						
 						
 							<div className="continue">
-								<Link to="/">
-									<input className="add-button add-button--to-pay" type="button" value="Pay"/>
+								<Link to="/success">
+									<input className="add-button add-button--to-pay" type="button" value="Pay" onClick={this.handleByu} />
 								</Link>
 							</div>
 							

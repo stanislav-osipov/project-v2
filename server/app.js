@@ -15,17 +15,18 @@ app.use(function(req, res, next) {
 data = {
 	categories: [],
 	menuCategories: [],
-	waresList: []
+	waresList: [],
+	wares: []
 };
 data.categories = require('./categories.js');
 data.menuCategories = require('./menuCategories.js');
 data.waresList = require('./waresList.js');
+data.wares = require('./wares.js');
 
 var text = fs.readFileSync('users.json', 'utf8');
 var jsonUsers = JSON.parse(text);
 
 app.get('/wares', function (req, res, next) {
-	//console.log(jsonUsers["02"]);
   res.send(data.categories);
 });
 
@@ -37,9 +38,11 @@ app.get('/wares/:categoryName', function (req, res, next) {
   res.send(data.waresList[req.params.categoryName]);
 });
 
+app.get('/ware/:wareName', function (req, res, next) {
+  res.send(data.wares[req.params.wareName]);
+});
+
 app.post('/users', function (req, res, next) {
-	//console.log(req.body.mail);
-	//console.log(req.body.psw);
 	var uniq = true;
 	for (var key in jsonUsers) {
 		if (jsonUsers[key].mail == req.body.mail) {
